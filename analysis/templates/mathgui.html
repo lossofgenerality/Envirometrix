@@ -1,0 +1,227 @@
+{% extends "public_base.html" %}
+
+
+{% block title %}Run Mathematica Sessions{% endblock %}
+
+{% block head_content %} 
+    {% load dajaxice_templatetags %}
+    {% dajaxice_js_import %}
+    
+    <script>
+    var start;
+    var end;
+    var headvars = {};
+    
+    function get_args(){
+        search_streams();
+        Dajaxice.analysis.get_args(callback_args, {'session_name':$( '#session' ).val()});
+    };
+    function callback_args(data){
+        $( "#args" ).html(data.body);
+        eval(data.head);
+    };
+    
+    function search_streams(){
+        Dajaxice.analysis.search_data(callback_streams, {'session_name':$( '#session' ).val(), 'type':$( '#querytype' ).val(), 'string':$( '#search' ).val()});
+    };
+    function callback_streams(data){
+        $( "#selection tr" ).fadeOut()
+        var html = ''
+        for (stream in data.datastreams){
+            var obj = eval('('+data.datastreams[stream]+')');
+            var info = obj['description']+' Contains '+obj['files']+' files';
+            if ('earliest' in obj)
+                info += ' from '+obj['earliest'];
+                if ('latest' in obj)
+                    info += ' to '+obj['latest'];
+            
+            html = html + '<tr title="'+info+'" style="display: none;"><td><input type="checkbox" name="_stream_'+obj['name']+'" onchange="get_datasets()"/></td><td>'+obj['name']+'</td></tr>';
+        }
+        $( "#selection" ).html(html);
+        $( "#selection tr" ).fadeIn()
+        $( "#selection tr").hover( function(){$( this ).toggleClass( "ui-state-hover" )} );
+        $( "#selection :checkbox").change( function(){$( this ).parent().parent().toggleClass( "ui-state-highlight" )} );
+    };
+    
+    function get_datasets(){
+        var streams = $( '[name*="_stream_"]:checked' ).map(function() {return $(this).attr('name').replace('_stream_', '')})
+        Dajaxice.analysis.datasets(callback_datasets, {'session_name':$( '#session' ).val(), 'stream_names': streams.toArray()});
+    };
+    function callback_datasets(data){
+        start = data['start']
+        end = data['end']
+        
+        var html = ''
+        
+        if (data.datasets.length==0){
+            html = '<tr><td></td><td>The datastreams selected do not share any datasets</td></tr>'
+        }
+        else {
+            data.datasets.sort();
+            for (sets in data.datasets){
+                var set = data.datasets[sets];
+                html = html + '<tr title="\
+                                    Dimensions: ('+set.shape+')\n\
+                                    Dimension Names: '+set.DimensionNames+'\n\
+                                    Units: '+set.Units+'\n\
+                                    "><td>\
+                                    <input type="checkbox" name="_dataset_'+set.name+'"/>\
+                                    </td><td>'+set.name+'</td></tr>';
+            };
+        };
+        $( "#dataset" ).html(html);
+        $( "#dataset tr").hover( function(){$( this ).toggleClass( "ui-state-hover" )} );
+        $( "#dataset :checkbox").change( function(){$( this ).parent().parent().toggleClass( "ui-state-highlight" )} );
+        set_date_lims();
+    };
+    
+    function set_date_lims(){
+        if (start) {
+            $( '#startdate' ).datepicker( 'option', 'minDate', start);
+            
+            if ( $( '#startdate' ).val() == '' || start > $( '#startdate' ).val() ){
+                $( '#enddate' ).datepicker( 'option', 'minDate', start);
+            }
+            else {
+                $( '#enddate' ).datepicker( 'option', 'minDate', $( '#startdate' ).val() );
+            }
+        }
+        else {
+            $( '#enddate' ).datepicker( 'option', 'minDate', $( '#startdate' ).val() );
+        }
+        
+        if (end) {
+            $( '#enddate' ).datepicker( 'option', 'maxDate', end );
+            
+            if ( $( '#enddate' ).val() == '' || end < $( '#enddate' ).val() ){
+                $( '#startdate' ).datepicker( 'option', 'maxDate', end);
+            }
+            else {
+                $( '#startdate' ).datepicker( 'option', 'maxDate', $( '#enddate' ).val() );
+            }
+        }
+        else {
+            $( '#startdate' ).datepicker( 'option', 'maxDate', $( '#enddate' ).val() );
+        }
+        
+    };
+  </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="ui-widget-content" style="padding-left: 15px; padding-right: 10%; margin-bottom: 20px; max-width: 1200px;"><h2>Run script as user {{ request.user.username }}:</h2></div>
+  
+    <form id="math" action="/analysis/api/" method="post" class="ui-widget-content" style="padding-left: 15px; padding-right: 10%; padding-top: 5%; max-width: 1200px;">
+    {% csrf_token %}
+    <table style="width: 100%; max-width: 1200px;">
+        <tr >
+            <td colspan=4 style="width: 75%;">
+                <select name="session" id="session" onchange="get_args()" style="width: 100%;">
+                    {% if session_list %}
+                        {% for session in session_list %}
+                            <option>{{ session.name }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <li>Sorry, no sessions available.</li>
+                    {% endif %}
+                </select>
+            </td>
+        </tr>
+        <tr >
+            <td colspan=4 class="ui-widget-header">
+                <p id="session_description"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select name="querytype" id="querytype" style="width: 100%; padding-right: 0%;" onchange="search_streams()">
+                  <option>name</option>
+                  <option>organization</option>
+                  <option>tags</option>
+                </select>
+            </td>
+            <td>
+                <input id="search" style="width: 100%;" colspan=4 oninput="search_streams()">
+            </td>
+        </tr>
+        <tr>
+            <td colspan=4>
+                <div style="height:200px ; overflow: auto; border-style: groove;">
+                    <table id="selection" class="ui-widget-header" style="width: 100%;">
+                        <tr>
+                            <td><input type="checkbox"/></td><td>Loading data streams...</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=4>
+                <div style="max-height:200px ; overflow: auto; border-style: groove;">
+                    <table id="dataset" class="ui-widget-header" style="width: 100%;">
+                        <tr>
+                            <td></td><td>The datastreams selected do not share any datasets</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Start Date:
+            </td>
+            <td>
+                Start Time:
+            </td>
+            <td>
+                End Date:
+            </td>
+            <td>
+                End Time: 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="startdate" name="startdate" style="width: 100%;" onchange="set_date_lims()">
+            </td>
+            <td>
+                <input type="text" id="starttime" name="starttime" style="width: 80%;" title="HH:MM:SS" value="12:00:00">
+            </td>
+            <td>
+                <input type="text" id="enddate" name="enddate" style="width: 100%;" onchange="set_date_lims()">
+            </td>
+            <td>
+                <input type="text" id="endtime" name="endtime" style="width: 80%;" title="HH:MM:SS" value="12:00:00">
+            </td>
+        </tr>
+        <tr>
+            <td colspan=4>
+                <div id="args">
+                </div>
+            </td>
+        </tr>
+    </table>
+        <p style="text-align: right;"><input type="submit" value="Submit" style="width: 25%;"/></p>
+    </form>
+
+    <script>
+    $( ":submit" ).button();
+    $( "#session" ).selectmenu({
+        change: function( event, ui ) {get_args()}
+    });
+    $( "#querytype" ).selectmenu({
+        change: function( event, ui ) {search_streams()}
+    });
+    $( "#dataset tr").hover( function(){$( this ).toggleClass( "ui-state-hover" )} );
+    $( "#startdate" ).datepicker();
+    $( "#enddate" ).datepicker();
+    $( document ).tooltip();
+    search_streams();
+    get_args();
+    
+  </script>
+{% endblock %}

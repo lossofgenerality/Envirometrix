@@ -1,0 +1,74 @@
+{% extends "public_base.html" %}
+
+
+{% block title %}{{ session }} output{% endblock %}
+{% block head_content %} 
+    {% load staticfiles %}
+    <script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+    <script src="{% static 'highlight/highlight.pack.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'highlight/styles/googlecode.css' %}">
+    
+    <script>
+  $(function() {
+    $( ".accordion" ).accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content",
+    });
+    $( ":button" ).button();
+  });
+  
+  show_preview = function(button) {
+    $( button ).next().toggle( 'blind', 1000 );
+    if ($( button ).button( 'option', 'label' ) == 'Show Preview') {
+        $( button ).button( 'option', 'label', 'Hide Preview');
+    }
+    else {
+        $( button ).button( 'option', 'label', 'Show Preview');
+    }
+  
+  }
+  </script>
+ {% endblock %}
+
+ {% block breadcrumbs %}
+    Mathematica Session Output >  <a href=".">{{ runner }}</a> > {{ session }} ({{ date }} at {{ time }})
+{% endblock %}
+ 
+{% block content %}
+<h2>Output for Mathematica Session {{ session }}</h2>
+<h3>Run on {{ date }} at {{ time }}</h3>
+<br/>
+<h3>Click on a filename to see options:</h3>
+
+{% autoescape off %}
+
+    {% for item in item_list %}
+        <div class="accordion", style="width: 95%; overflow: visible; text-overflow: ellipsis;">
+            <h3 style="">{{ item.name }}</h3>
+            <div style="word-wrap: break-word;">
+                <p>
+                    {% if item.name ==  "package.m" %}
+                        This is the exact code run on our Mathematica server to produce this output.
+                        <br/><br/>
+                    {% endif %}
+                    Download link: <a href={{ item.url}}>{{ item.url }}</a>
+                    <br/>
+                    Filesize: {{ item.size|filesizeformat }}
+                </p>
+                <div id="preview">
+                    {% if item.code %}
+                        <button onclick="show_preview(this)">Show Preview</button>
+                        <div hidden="true">
+                            <p>{{ item.code }}</p>
+                        </div>
+                    {% else %}
+                        <p> Sorry, no preview is available for this file type.</p>
+                    {% endif %}
+                 </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endautoescape %}
+{% endblock %}

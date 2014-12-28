@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% csrf_token %}
+    {% load staticfiles %} 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{% block title %}Atmospherics Base Template{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'jquery/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery/jquery-ui.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'jquery/external/jquery/jquery.js' %}"></script>
+    <script src="{% static 'jquery/jquery-ui.js' %}"></script>
+    
+    {% block head_content %}
+    {% endblock %}
+    
+    <script>
+  $(function() {
+    $( ".button" ).button();
+    $( ".button" ).css( "color", "#3383bb" );
+    $( ".button" ).css( "text-decoration", "none");
+  });
+  </script>
+  
+</head>
+
+<body style="margin: 0%; padding:0%;">
+    {% block header %}
+    <header style="clear: both; border-color: transparent; border-bottom-width: 1px; border-bottom-style: solid; border-top: 2px solid #fff;">
+        <table class="ui-widget-header" style="padding:10px; height:80px; width: 100%"><tr>
+            <td><h2>Atmospherics<h2></td>
+            {% if request.user%}
+            <td><p style="text-align: right"> Hello, {{ request.user.username }}. <a href="/logout">logout</a></p></td>
+            {% else %}
+            <td><p style="text-align: right"> You are not logged in.</p></td>
+            {% endif %}
+        </tr></table>
+        <div style="padding: 2%; padding-left: 4%;">
+            {% block breadcrumbs %}{% endblock %}
+        </div>
+    </header>
+    {% endblock %}
+    
+    {% block body %}
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 15%; vertical-align: top; align-content: center; padding: 2%;">
+            {% block sidebar %}
+                <div>
+                    <ul style="padding: 5px; list-style-type: none;">
+                        <li><a class="button" style="width: 80%; min-width: 150px; " href="http://atmospherics.lossofgenerality.com/public/math">Run Math Sessions</a></li>
+                        <li><a class="button" style="width: 80%; min-width: 150px;" href="http://atmospherics.lossofgenerality.com/output/{{ request.user.username }}">Math Session Output</a></li>
+                    </ul>
+                </div>
+            {% endblock %}
+            </td>
+            <td  style="vertical-align: top; align-content: center; padding: 2%;">
+                <div id="content" style="padding: 2%;">
+                    {% block content %}{% endblock %}
+                </div>
+            </td>
+        </tr>
+    </table>
+    {% endblock %}
+</body>
+</html>

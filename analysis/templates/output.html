@@ -1,0 +1,45 @@
+{% extends "public_base.html" %}
+
+
+{% block title %}Mathematica Session Output{% endblock %}
+{% block head_content %}    
+    <script>
+  $(function() {
+    $( ".accordion" ).accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content",
+    });
+    $( ":button" ).button();
+  });
+  </script>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <a href=".">Mathematica Session Output </a> >  {{ user }}
+{% endblock %}
+    
+{% block content %}
+<h2>Output for All Mathematica Sessions run by {{ user }}</h2>
+<br/>
+<h3>Click on a session name to see options:</h3>
+
+{% autoescape off %}
+
+    {% for item in item_list %}
+        <div class="accordion", style="width: 95%;">
+            <h3>{{ item.name }} run on {{ item.date }} at {{ item.time }}</h3>
+            <div style="word-wrap: break-word;">
+                <p>
+                    Output page: <a href={{ item.url}}>{{ item.url }}</a>
+                    <br/>
+                    Number of files: {{ item.numfiles }}
+                    <br/>
+                    Total size: {{ item.size|filesizeformat }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endautoescape %}
+{% endblock %}

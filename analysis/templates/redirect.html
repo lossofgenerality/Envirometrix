@@ -1,0 +1,17 @@
+{% extends "public_base.html" %}
+
+{% block title %}Mathematica Session {{ status }}{% endblock %}
+
+{% block head_content %}
+<meta http-equiv="refresh" content="3;url=../../public/math">
+{% endblock %}
+
+{% block body %}
+
+<div style="padding: 10%;">
+<p>{{ message }}</p>
+
+<p>If you are not redirected to the Mathematica Sessions page within a few seconds, <a href="../../public/math">Click here.</a>
+</div>
+
+{% endblock %}

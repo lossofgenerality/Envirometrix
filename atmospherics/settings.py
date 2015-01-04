@@ -70,7 +70,7 @@ LOGGING = {
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'vo-#zdlm39p-npb_b($46b@$t$s-5ep%!$%o+ey5r#@q=8+z50'
+SECRET_KEY = 'REDACTED FOR SECURITY REASONS'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,12 +125,12 @@ WSGI_APPLICATION = 'atmospherics.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',   # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'atmospherics',                         # Or path to database file if using sqlite3.
-        'USER': 'atmos',                                    # Not used with sqlite3.
-        'PASSWORD': 'bZ24161p',                     # Not used with sqlite3.
-        'HOST': 'localhost',                                # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                                             # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql',                           # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'atmospherics',                                                 # Or path to database file if using sqlite3.
+        'USER': 'REDACTED FOR SECURITY REASONS',               # Not used with sqlite3.
+        'PASSWORD': 'REDACTED FOR SECURITY REASONS',      # Not used with sqlite3.
+        'HOST': 'localhost',                                                        # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                                                                     # Set to empty string for default. Not used with sqlite3.
         #'autocommit': True,
     }
 }
@@ -176,17 +176,13 @@ TEMPLATE_DIRS = (
 )
 
 EMAIL_HOST = 'smtp.mandrillapp.com'
-EMAIL_HOST_USER = 'wayne.allen@predictivefinancialsolutions.com'
-EMAIL_HOST_PASSWORD = 'R-BfQCujNDO6XnK90LvM8w'
+EMAIL_HOST_USER = 'REDACTED FOR SECURITY REASONS'
+EMAIL_HOST_PASSWORD = 'REDACTED FOR SECURITY REASONS'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-SSH_HOST = 'thorek01.lossofgenerality.com'
-SSH_USER = 'ipaic'
-SSH_PASSWORD = 'aY14121p!'
-
-# SSH_HOST = '192.168.0.111'
-# SSH_USER = 'jacob'
-# SSH_PASSWORD = 'jacob'
+SSH_HOST = 'REDACTED FOR SECURITY REASONS'
+SSH_USER = 'REDACTED FOR SECURITY REASONS'
+SSH_PASSWORD = 'REDACTED FOR SECURITY REASONS'
 
 #Copyright 2014 Thorek/Scott and Partners. All Rights Reserved.

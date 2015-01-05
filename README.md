@@ -20,6 +20,19 @@ Script output is also accessed through an interface
 
 ![output screencap](https://github.com/lossofgenerality/Envirometrix/blob/master/Mathematica%20Scripts/Interface%20Screencaps/output_1.jpg)
 
+Mathematica scripts are edited through the Django admin.
+
+![editor script field](https://github.com/lossofgenerality/Envirometrix/blob/master/Mathematica%20Scripts/Interface%20Screencaps/editor_1.jpg)
+
+Parameters, corresponding to variables within the Mathematica script, can be specified and made available through the script interface.
+
+![editor argument field](https://github.com/lossofgenerality/Envirometrix/blob/master/Mathematica%20Scripts/Interface%20Screencaps/editor_2.jpg)
+
+Which data streams and which datasets from those streams can be specified to prevent a script from being run with incompatible data.
+
+![editor data fields](https://github.com/lossofgenerality/Envirometrix/blob/master/Mathematica%20Scripts/Interface%20Screencaps/editor_3.jpg)
+
+
 
 License:
 

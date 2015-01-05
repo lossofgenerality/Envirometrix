@@ -99,3 +99,5 @@ Export["/tmp/tmp.aNBWM3G91s/"<>"image.jpg", Column[{ArrayPlot[GaussianFilter[dat
 Export["/tmp/tmp.aNBWM3G91s/"<>"data.h5", Transpose[buffer,{2,3,1}],{"Datasets",Join[datasets,datetimesets]}];
 
 Close[logstream];
+
+(*License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html*)

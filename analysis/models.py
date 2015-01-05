@@ -303,3 +303,4 @@ add_introspection_rules([], ["^analysis\.models\.SeparatedValuesField"])
 
 
 #Copyright 2014-present lossofgenerality.com
+#License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html

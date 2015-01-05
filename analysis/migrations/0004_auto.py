@@ -131,3 +131,6 @@ class Migration(SchemaMigration):
     }
 
     complete_apps = ['analysis']
+
+
+#Copyright 2014-present lossofgenerality.com

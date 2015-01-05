@@ -165,3 +165,7 @@ mergeData[filepaths_, datasets_]:=Join @@ (correlateDatasets[#, datasets]&/@file
 
 End[];
 EndPackage[];
+
+
+
+(*Copyright 2014-present lossofgenerality.com*)

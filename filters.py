@@ -117,3 +117,7 @@ admin.filters.FieldListFilter.register(
     lambda f: isinstance(f, models.TextField), StringFilter)
 admin.filters.FieldListFilter.register(
     lambda f: isinstance(f, models.DateField), DateRangeFilter)
+
+
+
+#Copyright 2014-present lossofgenerality.com

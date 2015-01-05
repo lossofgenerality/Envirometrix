@@ -20,4 +20,5 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
-#Copyright 2014 Thorek/Scott and Partners. All Rights Reserved.
+
+#Copyright 2014-present lossofgenerality.com

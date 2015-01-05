@@ -211,3 +211,6 @@ def output_index(request, user):
     
     
     
+
+
+#Copyright 2014-present lossofgenerality.com

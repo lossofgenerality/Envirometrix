@@ -300,3 +300,6 @@ class PythonScript(models.Model):
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["^analysis\.models\.SeparatedValuesField"])
     
+
+
+#Copyright 2014-present lossofgenerality.com

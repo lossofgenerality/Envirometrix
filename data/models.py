@@ -464,3 +464,6 @@ class PythonSource(models.Model):
         code = self.code.replace("'", '\'"\'"\'')
         code = code.replace("\\", "\\\\")
         exec(code)
+
+
+#Copyright 2014-present lossofgenerality.com

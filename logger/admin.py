@@ -26,3 +26,7 @@ class LogAdmin(admin.ModelAdmin):
         return truncatechars(obj.message, 50)
 
 admin.site.register(models.Log, LogAdmin)
+
+
+
+#Copyright 2014-present lossofgenerality.com

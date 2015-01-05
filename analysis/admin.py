@@ -138,3 +138,6 @@ class PythonScriptAdmin(admin.ModelAdmin):
         return instance
 
 admin.site.register(PythonScript, PythonScriptAdmin)
+
+
+#Copyright 2014-present lossofgenerality.com

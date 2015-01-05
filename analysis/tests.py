@@ -86,3 +86,6 @@ def run_static(math_session):
     }
     dic.update(arg_dict)
     response = c.post('/analysis/api/', dic)
+
+
+#Copyright 2014-present lossofgenerality.com

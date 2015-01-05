@@ -186,3 +186,6 @@ SSH_USER = 'REDACTED FOR SECURITY REASONS'
 SSH_PASSWORD = 'REDACTED FOR SECURITY REASONS'
 
 #Copyright 2014 Thorek/Scott and Partners. All Rights Reserved.
+
+
+#Copyright 2014-present lossofgenerality.com

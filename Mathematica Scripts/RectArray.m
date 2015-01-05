@@ -116,3 +116,7 @@ Export["image.jpg",Column[{ArrayPlot[GaussianFilter[dataArray, 5],ImageSize->Rev
 Export["data.h5",Transpose[buffer,{2,3,1}],{"Datasets",Join[datasets,datetimesets]}];
 
 Close[logstream];
+
+
+
+(*Copyright 2014-present lossofgenerality.com*)

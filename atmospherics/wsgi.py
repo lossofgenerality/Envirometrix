@@ -12,3 +12,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "atmospherics.settings")
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+
+
+
+#Copyright 2014-present lossofgenerality.com

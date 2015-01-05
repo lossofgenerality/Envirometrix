@@ -65,3 +65,7 @@ def shared_task(constructor):
     alias.delay = alias_delay
     return alias
 
+
+
+
+#Copyright 2014-present lossofgenerality.com

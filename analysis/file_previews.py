@@ -69,3 +69,6 @@ embed_code = {
         </div>
     ''',
 }
+
+
+#Copyright 2014-present lossofgenerality.com

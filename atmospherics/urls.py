@@ -38,3 +38,6 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
+
+
+#Copyright 2014-present lossofgenerality.com

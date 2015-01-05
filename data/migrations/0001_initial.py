@@ -40,3 +40,6 @@ class Migration(SchemaMigration):
     }
 
     complete_apps = ['data']
+
+
+#Copyright 2014-present lossofgenerality.com

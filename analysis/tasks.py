@@ -127,3 +127,6 @@ def run_python_scripts():
     
     for script in PythonScript.objects.filter(periodic=True):
         script.run_script()
+
+
+#Copyright 2014-present lossofgenerality.com

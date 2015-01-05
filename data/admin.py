@@ -31,3 +31,7 @@ class DataStreamAdmin(admin.ModelAdmin):
 admin.site.register(DataStream, DataStreamAdmin)
 admin.site.register(FTPSource)
 admin.site.register(MathematicaSource)
+
+
+
+#Copyright 2014-present lossofgenerality.com

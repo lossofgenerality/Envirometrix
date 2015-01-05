@@ -50,3 +50,7 @@ class Log(models.Model):
     @staticmethod
     def error(subsystem, message, time_stamp=None, elapsed_time=None):
         return Log.log('error', subsystem, message, time_stamp, elapsed_time)
+
+
+
+#Copyright 2014-present lossofgenerality.com

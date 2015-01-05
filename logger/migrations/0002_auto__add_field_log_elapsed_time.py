@@ -32,3 +32,6 @@ class Migration(SchemaMigration):
     }
 
     complete_apps = ['logger']
+
+
+#Copyright 2014-present lossofgenerality.com

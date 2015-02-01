@@ -16,7 +16,3 @@ def fetch_Math():
     
     for source in MathematicaSource.objects.all():
         source.fetch_data_math()
-
-
-#Copyright 2014-present lossofgenerality.com
-#License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html

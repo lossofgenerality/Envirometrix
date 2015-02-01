@@ -3,6 +3,11 @@ from django import forms
 import string
 from .models import *
 
+def fetch(modeladmin, request, queryset):
+    for obj in queryset:
+        obj.fetch_data_ftp()
+fetch.short_description = 'Fetch data via FTP'
+
 
 class DataStreamForm(forms.ModelForm):
      naming_scheme = forms.CharField(widget=forms.TextInput(
@@ -29,10 +34,12 @@ class DataStreamAdmin(admin.ModelAdmin):
         return instance
 
 admin.site.register(DataStream, DataStreamAdmin)
-admin.site.register(FTPSource)
+
+
+class FTPSourceAdmin(admin.ModelAdmin):
+    actions = [fetch]
+
+admin.site.register(FTPSource, FTPSourceAdmin)
+
+
 admin.site.register(MathematicaSource)
-
-
-
-#Copyright 2014-present lossofgenerality.com
-#License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html

@@ -102,7 +102,7 @@ class DataStream(models.Model):
         Finds the earliest date of any of the available files.
         """
         if len(self.filelist) > 0 and self.filedate(self.filelist[0]):
-            return min(map(self.filedate, self.filelist))
+            return min(map(self.filedate, [file for file in self.filelist if self.filedate(file)] ))
         else:
             return None
             
@@ -112,7 +112,7 @@ class DataStream(models.Model):
         Finds the latest date and time of any of the available files.
         """
         if len(self.filelist) > 0 and self.filedate(self.filelist[0]):
-            return max(map(self.filedate, self.filelist))
+            return max(map(self.filedate, [file for file in self.filelist if self.filedate(file)] ))
         else:
             return None
             
@@ -210,10 +210,11 @@ class DataStream(models.Model):
             item = groups.pop()
             if isinstance(item, h5py.Dataset):
                 data = {
-                    'name': item.name,
-                    'shape': file[item.name].shape
+                    u'name': item.name,
+                    u'shape': file[item.name].shape
                     }
-                data.update(dict(file[item.name].attrs.items()))
+                attrs = file[item.name].attrs.items()
+                data.update({key: str(val) for key, val in attrs})
                 datasets.append(data)
             else:
                 for subitem in item.values():
@@ -464,7 +465,3 @@ class PythonSource(models.Model):
         code = self.code.replace("'", '\'"\'"\'')
         code = code.replace("\\", "\\\\")
         exec(code)
-
-
-#Copyright 2014-present lossofgenerality.com
-#License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
